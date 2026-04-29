@@ -683,7 +683,28 @@ const data = [
       "Kvėpavimo nepakankamumas",
       "Trauma",
       "Pasikartojantys traukuliai"
-    ]
+    ],red:[
+ red:[
+  "Traukuliai >5 min",
+  "Nėščioji",
+  "Kvėpavimo nepakankamumas",
+  "Trauma",
+  "Pasikartojantys traukuliai"
+],
+meds:[
+  "Diazepamas – 10 mg i/v iki suminės 30 mg dozės.",
+  "Arba Midazolamas – 5 mg.",
+  "Nėščiajai: MgSO4 25 % – 5 g i/v lėtai per 10–15 min.",
+  "Pasikartojus traukuliams nėščiajai: MgSO4 25 % – 2 g.",
+  "Jei vėl traukuliai: Diazepamas – 10 mg i/v."
+],
+dilution:[
+  "Po traukulių nėščiajai palaikomoji dozė: MgSO4 1–2 g/val infuzijos būdu.",
+  "20 ml MgSO4 25 % skiesti į 0,9 % NaCl 500 ml.",
+  "Lašinti 100–200 ml/val greičiu."
+],
+children:[]
+]
   },
   {
     t:"Anafilaksija",
@@ -802,7 +823,19 @@ const data = [
       "Gliukagonas i/m, jei nepavyko punktuoti venos",
       "Atgavus sąmonę – ABCDE, EKG"
     ],
-    red:[
+    red:[,
+meds:[
+  "Sąmoningam pacientui: gliukozė – 15 g per os.",
+  "Gliukozės pavyzdžiai: 3 šaukšteliai medaus, 3 gliukozės tabletės arba saldi arbata.",
+  "Nesąmoningam pacientui: 40 % gliukozės tirpalas – iki 60 ml i/v.",
+  "Gliukagonas – 1 mg i/m, jei nepavyko punktuoti venos."
+],
+dilution:[
+  "Glikemiją matuoti po 5 min.",
+  "Po sąmonės atgavimo atlikti ABCDE, EKG, Cincinnati."
+],
+children:[]
+      
       "Koma",
       "Traukuliai",
       "Nepagerėja po korekcijos"
@@ -950,6 +983,26 @@ function openD(i){
       ${steps(x.treat)}
     </div>
   `;
+  ${x.meds && x.meds.length ? `
+  <div class="panel redPanel">
+    <h3 style="color:#FF3B3B">Vaistai ir dozės</h3>
+    ${steps(x.meds)}
+  </div>
+` : ""}
+
+${x.dilution && x.dilution.length ? `
+  <div class="panel">
+    <h3>Skiedimai / infuzijos</h3>
+    ${steps(x.dilution)}
+  </div>
+` : ""}
+
+${x.children && x.children.length ? `
+  <div class="panel" style="border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)">
+    <h3 style="color:#86EFAC">Vaikai</h3>
+    ${steps(x.children)}
+  </div>
+` : ""}
 
   show("detail");
 }
