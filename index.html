@@ -648,7 +648,6 @@ document.querySelectorAll("[data-icon]").forEach(el=>{
 
 document.getElementById("starLogo").innerHTML =
   '<svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M5 5l14 14M19 5L5 19" stroke="white" stroke-width="2.2" stroke-linecap="round"/><path d="M12 2l3 4h5l-4 4 4 4h-5l-3 4-3-4H4l4-4-4-4h5l3-4z" stroke="#60A5FA" stroke-width="1.5"/></svg>';
-
 const data = [
   {
     t:"Traukuliai",
@@ -656,7 +655,7 @@ const data = [
     c:"redC",
     d:"Kritinė būklė",
     cat:"Neurologija",
-    k:"traukuliai epilepsija diazepamas midazolamas nėščia mgso4",
+    k:"traukuliai epilepsija diazepamas midazolamas nėščia mgso4 konvulsijos sąmonės sutrikimas",
     fast:[
       "Saugoti pacientą nuo susižalojimo, saugoti galvą, paversti ant šono.",
       "Nėščiąją paversti ant kairio šono.",
@@ -667,10 +666,11 @@ const data = [
     sym:[
       "Traukuliai arba pasikartojantys epizodai.",
       "Sąmonės sutrikimas po traukulių.",
-      "Įvertinti, ar buvo traukuliai anksčiau, ar vartoja vaistus nuo epilepsijos, ar nekarščiuoja, ar neserga CD, ar nėra nėštumo, ar nebuvo galvos traumos, narkotikų vartojimo, insulto, alkoholio nutraukimo."
+      "Įvertinti, ar buvo traukuliai anksčiau, ar vartoja vaistus nuo epilepsijos, ar nekarščiuoja, ar neserga CD, ar nėra nėštumo.",
+      "Įvertinti galvos traumą, narkotikų vartojimą, insultą, alkoholio vartojimo nutraukimą."
     ],
     treat:[
-      "Po traukulių: jei reikia atverti kvėpavimo takus, stebėti sąmonės būklę.",
+      "Po traukulių: jei reikia, atverti kvėpavimo takus ir stebėti sąmonės būklę.",
       "Pulsoksimetras.",
       "Deguonis pagal SpO₂.",
       "AKS, monitoravimas, EKG.",
@@ -681,38 +681,133 @@ const data = [
     meds:[
       "Diazepamas – 10 mg i/v iki suminės 30 mg dozės.",
       "Arba Midazolamas – 5 mg.",
-      "Nėščiajai: MgSO4 25 % – 5 g i/v lėtai per 10–15 min.",
-      "Pasikartojus traukuliams nėščiajai: MgSO4 25 % – 2 g.",
+      "Nėščiajai: MgSO₄ 25 % – 5 g i/v lėtai per 10–15 min.",
+      "Pasikartojus traukuliams nėščiajai: MgSO₄ 25 % – 2 g.",
       "Jei vėl traukuliai: Diazepamas – 10 mg i/v."
     ],
     dilution:[
-      "Po traukulių nėščiajai palaikomoji dozė: MgSO4 1–2 g/val infuzijos būdu.",
-      "20 ml MgSO4 25 % skiesti į 0,9 % NaCl 500 ml.",
+      "Po traukulių nėščiajai palaikomoji dozė: MgSO₄ 1–2 g/val infuzijos būdu.",
+      "20 ml MgSO₄ 25 % skiesti į 0,9 % NaCl 500 ml.",
       "Lašinti 100–200 ml/val greičiu."
     ],
     red:[
       "Traukuliai >5 min.",
+      "Pasikartojantys traukuliai neatgavus sąmonės.",
       "Nėščioji.",
       "Kvėpavimo nepakankamumas.",
-      "Galvos trauma.",
-      "Pasikartojantys traukuliai."
+      "Galvos trauma, karščiavimas ar meninginiai simptomai."
     ],
     children:[]
   },
   {
-    t:"Anafilaksija",
+    t:"Hiperglikemija",
+    icon:"glucose",
+    c:"orangeC",
+    d:"Skubi būklė",
+    cat:"Endokrinologija",
+    k:"hiperglikemija ketoacidozė diabetas gliukozė troškulys poliurija koma",
+    fast:[
+      "ABCD ištyrimas.",
+      "Deguonis pagal SpO₂.",
+      "Punktuoti veną.",
+      "Pamatuoti glikemiją.",
+      "Jei glikemija viršija 33 mmol/l – skysčiai pagal protokolą.",
+      "Surinkti SAMPLE."
+    ],
+    sym:[
+      "Didelis gliukozės kiekis kraujyje.",
+      "Troškulys, dažnas šlapinimasis, silpnumas.",
+      "Pykinimas, vėmimas, pilvo skausmas.",
+      "Sąmonės sutrikimas sunkiais atvejais.",
+      "Galimas acetono kvapas ar gilus kvėpavimas, jei ketoacidozė."
+    ],
+    treat:[
+      "ABCDE / ABCD vertinimas.",
+      "Deguonis pagal SpO₂.",
+      "Veninė prieiga.",
+      "Stebėti AKS, pulsą, SpO₂, sąmonę.",
+      "Įvertinti galimą ketoacidozę arba hiperosmolinę būklę.",
+      "Perduoti / transportuoti pagal būklę."
+    ],
+    meds:[
+      "Insulino korekcija tik pagal vietinį protokolą arba gydytojo nurodymą."
+    ],
+    dilution:[
+      "Jei glikemija >33 mmol/l – 0,9 % NaCl 500–2000 ml vidutine srove pagal būklę ir protokolą."
+    ],
+    red:[
+      "Sąmonės sutrikimas.",
+      "Glikemija >33 mmol/l.",
+      "Dehidratacija, hipotenzija.",
+      "Kussmaul tipo kvėpavimas.",
+      "Įtariama diabetinė ketoacidozė."
+    ],
+    children:[]
+  },
+  {
+    t:"Hipoglikemija",
+    icon:"glucose",
+    c:"whiteC",
+    d:"Kritinė būklė",
+    cat:"Endokrinologija",
+    k:"hipoglikemija gliukozė cukrus diabetas koma prakaitavimas glikemija",
+    fast:[
+      "ABCDE ištyrimas.",
+      "Pamatuoti glikemiją.",
+      "Įvertinti sąmonės būklę ir rijimo saugumą.",
+      "Deguonis pagal SpO₂.",
+      "Jei sąmoningas – gliukozė per os.",
+      "Jei nesąmoningas – gliukozė i/v arba gliukagonas pagal protokolą.",
+      "Hipoglikemijos metu glikemiją matuoti po 5 min."
+    ],
+    sym:[
+      "Gliukozės kiekis kraujyje <3,33 mmol/l.",
+      "Ankstyvas požymis gali būti pasikeitęs elgesys.",
+      "Galvos skausmas, mieguistumas, prakaitavimas.",
+      "Vėliau – sąmonės sutrikimas, koma.",
+      "Gali būti traukuliai."
+    ],
+    treat:[
+      "Sąmoningam: deguonis 2–4 l/min pagal SpO₂.",
+      "Sąmoningam: gliukozė 15 g per os, jei saugu ryti.",
+      "Punktuoti veną.",
+      "Pagal gliukotesterio parodymus leisti 40 % gliukozės tirpalą.",
+      "Nesąmoningam: deguonis per veido kaukę 10–15 l/min.",
+      "Jei reikia, atverti kvėpavimo takus.",
+      "Atgavus sąmonę – ABCDE, EKG, Cincinnati.",
+      "Transportuoti pacientui patogioje padėtyje.",
+      "SAMPLE."
+    ],
+    meds:[
+      "Gliukozė per os – 15 g, jei pacientas sąmoningas ir gali ryti.",
+      "40 % gliukozės tirpalas i/v iki 60 ml, jei pacientas nesąmoningas arba pagal parodymus.",
+      "Gliukagonas – 1 mg i/m, jei nepavyko punktuoti venos."
+    ],
+    dilution:[],
+    red:[
+      "Koma.",
+      "Traukuliai.",
+      "Nepagerėja po gliukozės korekcijos.",
+      "Pasikartojanti hipoglikemija.",
+      "Neaiški priežastis."
+    ],
+    children:[]
+  },
+  {
+    t:"Anafilaksinis šokas",
     icon:"alert",
     c:"whiteC",
     d:"Kritinė būklė",
     cat:"Alergologija",
-    k:"anafilaksija alergija adrenalinas stridoras edema hipotenzija",
+    k:"anafilaksija anafilaksinis šokas alergija adrenalinas stridoras edema hipotenzija",
     fast:[
       "Pagalbos teikimo principas – ABCDE.",
       "AKS, pulsoksimetras, EKG, monitorius būtina.",
       "Paguldyti pacientą.",
       "Jei įmanoma, pašalinti alergeną.",
       "Deguonis per veido kaukę 10–15 l/min.",
-      "Įvertinti kvėpavimo takų praeinamumą – jei reikia ruoštis intubacijai.",
+      "Adrenalinas i/m pagal protokolą.",
+      "Įvertinti kvėpavimo takų praeinamumą – jei reikia, ruoštis intubacijai.",
       "Sekti ABCD."
     ],
     sym:[
@@ -723,6 +818,7 @@ const data = [
     ],
     treat:[
       "Punktuoti veną.",
+      "Skirti 0,9 % NaCl pagal būklę.",
       "Jei yra cypiančių karkalų – salbutamolis pagal bronchų spazmą.",
       "Nesant efekto konsultuotis dėl vaistų skyrimo į lašinę infuziją.",
       "Įvertinti kvėpavimo takų praeinamumą.",
@@ -744,14 +840,452 @@ const data = [
       "Gerklų edema.",
       "Žemas AKS.",
       "SpO₂ kritimas.",
-      "Sąmonės blogėjimas."
+      "Sąmonės blogėjimas.",
+      "Nepagerėja po adrenalino."
     ],
     children:[]
   },
-      children:[]
+  {
+    t:"Pilvo skausmas",
+    icon:"abdomen",
+    c:"whiteC",
+    d:"Skubi būklė",
+    cat:"Virškinimo sistema",
+    k:"pilvo skausmas ūmus pilvas apendicitas kraujavimas vėmimas morfijus ketonalis nošpa metoklopramidas",
+    fast:[
+      "ABCDE ištyrimas.",
+      "Palpuoti pilvą.",
+      "Auskultuoti peristaltikos garsus.",
+      "Jei skausmas virš bambos – EKG.",
+      "Įvertinti skausmo stiprumą 0–10 balų.",
+      "Monitorius.",
+      "Neduoti valgyti ir gerti.",
+      "Suteikti patogią padėtį.",
+      "Deguonis pagal SpO₂ nuo 94 %."
+    ],
+    sym:[
+      "Paklausti, ar vėmė krauju arba kavos tirščiais.",
+      "Paklausti, ar išmatose buvo kraujo, gleivių, ar išmatos buvo juodos spalvos.",
+      "Paklausti, ar šlapinasi normaliai.",
+      "Moterims įvertinti menstruacijas ir nėštumo galimybę.",
+      "Paklausti, ar karščiuoja.",
+      "Įvertinti dusulį, prakaitavimą, silpnumą, raumenų skausmus, kosulį.",
+      "Įvertinti, kada prasidėjo, kur plinta, kas provokuoja ir kas mažina skausmą.",
+      "Įvertinti traumą."
+    ],
+    treat:[
+      "Jei AKS <90 mmHg – NaCl 250 ml i/v atsargiai, stebint AKS.",
+      "Malšinti skausmą pagal stiprumą ir protokolą.",
+      "Pykinimui ir vėmimui – antiemetikas pagal protokolą.",
+      "Sekti ABCD.",
+      "Transportuoti / perduoti pagal būklę."
+    ],
+    meds:[
+      "Morfijus – titruotai po 2–4 mg, jei skausmas >8 balai, kol sumažės 2–3 balais.",
+      "Ketonalį svarstyti skausmui iki 8 balų pagal protokolą.",
+      "Nošpa – 4 ml, jei akmenligės priepuolis.",
+      "Metoklopramidas – 10 mg pykinimui / vėmimui."
+    ],
+    dilution:[
+      "Jei AKS <90 mmHg – 0,9 % NaCl 250 ml i/v atsargiai, stebėti AKS.",
+      "Morfijus turi būti skiriamas atskiestas ir titruotai pagal protokolą."
+    ],
+    red:[
+      "Vėmimas krauju arba kavos tirščiais.",
+      "Juodos išmatos arba kraujas išmatose.",
+      "Peritoniniai simptomai.",
+      "Hipotenzija.",
+      "Stiprus skausmas su sąmonės blogėjimu.",
+      "Įtariamas ūmus pilvas arba ektopinis nėštumas."
+    ],
+    children:[]
+  },
+  {
+    t:"Hipertermija",
+    icon:"temp",
+    c:"orangeC",
+    d:"Kritinė būklė",
+    cat:"Aplinkos poveikis",
+    k:"hipertermija šilumos smūgis karštis temperatūra perkaitimas saulė pirtis",
+    fast:[
+      "ABCDE – ieškoti priežasčių, dėl ko pacientas perkaito.",
+      "Pernešti į vėsesnę vietą.",
+      "Paguldyti.",
+      "Nurengti rūbus.",
+      "Deguonis, sekti SpO₂.",
+      "Punktuoti veną.",
+      "Vėdinti.",
+      "Dėti vėsius paketus ant pažastų, kaklo, kirkšnių.",
+      "Jei sąmoningas ir nevemia – duoti gerti skysčių.",
+      "Transportuoti pakelta galva."
+    ],
+    sym:[
+      "Ilgas buvimas saulėtoje arba karštoje aplinkoje.",
+      "Užmigimas pirtyje, ilgas buvimas karštyje.",
+      "Mažas skysčių vartojimas.",
+      "Vaistai, alkoholis, narkotikai, diuretikai kaip rizikos veiksniai.",
+      "Raumenų spazmai, mėšlungis.",
+      "Galvos svaigimas, pykinimas, silpnumas.",
+      "Oda gali būti šalta, prakaituota, padažnėjęs kvėpavimas ir pulsas, sumišimas.",
+      "Arba kūno temperatūra >40,6 °C, sausa oda, galvos skausmas, vėmimas, sąmonės sutrikimas, koma."
+    ],
+    treat:[
+      "Aktyvus vėsinimas.",
+      "Stebėti SpO₂, AKS, pulsą, sąmonę.",
+      "EKG.",
+      "Monitoruoti.",
+      "Nemasažuoti mėšlungio apimtų raumenų.",
+      "Negydyti ritmo sutrikimų kaip pirminio tikslo, kol nevaldoma hipertermija.",
+      "Neskirti antipiretikų.",
+      "Sekti ABCD."
+    ],
+    meds:[
+      "Antipiretikų neskirti."
+    ],
+    dilution:[
+      "Punktuoti veną – 18–20 °C skysčiai pagal protokolą."
+    ],
+    red:[
+      "Kūno temperatūra >40,6 °C.",
+      "Sąmonės sutrikimas arba koma.",
+      "Traukuliai.",
+      "Hipotenzija arba šoko požymiai.",
+      "Neefektyvus vėsinimas."
+    ],
+    children:[]
+  },
+  {
+    t:"Insultas",
+    icon:"brain",
+    c:"blueC",
+    d:"Skubi būklė",
+    cat:"Neurologija",
+    k:"insultas FAST Cincinnati MEND kalba ranka veidas trombolizė neurologija glikemija",
+    fast:[
+      "ABCD – užtikrinti gyvybines funkcijas.",
+      "Pulsoksimetras, AKS.",
+      "Cincinnati / FAST vertinimas.",
+      "Pamatuoti cukraus kiekį kraujyje.",
+      "Įvertinti neurologinę būklę.",
+      "Būtina pažymėti tikslų insulto atsiradimo laiką.",
+      "Transportuojant galvą pakelti 45 laipsnių kampu.",
+      "SPS pranešimas insulto klasteriui."
+    ],
+    sym:[
+      "Staiga atsiranda veido, rankos ar kojos silpnumas arba tirpimas, ypač vienos kūno pusės.",
+      "Staiga pasireiškia sumišimas.",
+      "Sutrinka kalba ar jos supratimas.",
+      "Staiga sutrinka matymas viena ar abiem akimis.",
+      "Staiga atsiranda eisenos sutrikimas.",
+      "Galvos svaigimas, pusiausvyros ir koordinacijos sutrikimai.",
+      "Staiga prasideda galvos skausmas be aiškios priežasties.",
+      "Pagrindiniai požymiai: veido paralyžius, rankos silpnumas, kalbos sutrikimai.",
+      "Diagnozuojant būtina išsiaiškinti, ar nebuvo traukulių ir ar pacientas neserga epilepsija."
+    ],
+    treat:[
+      "Deguonis, jei SpO₂ <94 %, 4–6 l/min.",
+      "Punktuoti veną.",
+      "0,9 % NaCl 250 ml lėtai.",
+      "Jei reikia, koreguoti glikemiją 40 % gliukoze.",
+      "EKG rašoma, jei yra krūtinės skausmas ar naujai atsiradę širdies ritmo sutrikimai.",
+      "Jei AKS neviršija 220/120 mmHg, kraujospūdžio mažinti negalima.",
+      "Būklei blogėjant pasirengti specializuotomis priemonėmis užtikrinti kvėpavimo takų praeinamumą.",
+      "Monitoruoti.",
+      "Trombolizės klausimynas ir SPS pranešimas klasteriui.",
+      "Perspėti priėmimo skyrių: būklė, pradžios laikas, kada atvyksite.",
+      "Sekti ABCD."
+    ],
+    meds:[
+      "40 % gliukozė, jei reikia koreguoti hipoglikemiją.",
+      "Jei būtina koreguoti AKS pagal protokolą: nitroglicerinas po liežuviu arba kaptoprilis 25 mg."
+    ],
+    dilution:[
+      "0,9 % NaCl – 250 ml lėtai."
+    ],
+    red:[
+      "GKS blogėjimas.",
+      "Kvėpavimo takų grėsmė.",
+      "Traukuliai.",
+      "Nežinomas simptomų pradžios laikas.",
+      "Hipoglikemija kaip insulto imitatorius.",
+      "Įtariamas kraujavimas į smegenis."
+    ],
+    children:[]
+  },
+  {
+    t:"Plaučių edema",
+    icon:"lungs",
+    c:"cyanC",
+    d:"Kritinė būklė",
+    cat:"Kvėpavimas / Kardiologija",
+    k:"plaučių edema širdies nepakankamumas dusulys putoti skrepliai karkalai furosemidas nitroglicerinas morfinas",
+    fast:[
+      "Nuraminti pacientą.",
+      "ABCDE.",
+      "AKS, pulsoksimetras, EKG.",
+      "Užtikrinti kvėpavimo takų praeinamumą.",
+      "Punktuoti veną.",
+      "Sėdima padėtis pagal būklę, nuleistomis kojomis.",
+      "Deguonis per kaukę su rezervuaru 10–15 l/min.",
+      "ABCD nuolat vertinti.",
+      "Monitoruoti."
+    ],
+    sym:[
+      "Gali iššaukti miokardo infarktas, širdies nepakankamumas, hipertenzinė krizė, širdies ritmo sutrikimai.",
+      "Dažnas kvėpavimas.",
+      "Švilpiantys, dažniausiai drėgni karkalai, išklausomi apie 50 % plaučių ploto ar daugiau.",
+      "Dusulys.",
+      "Putoti skrepliai.",
+      "Kosulys.",
+      "AKS aukštas esant hipertenzinei krizei arba žemas esant šokui.",
+      "Priverstinė sėdima padėtis, nuleistomis kojomis.",
+      "Šalta, drėgna, melsvo atspalvio oda.",
+      "Išsipūtusios kaklo venos."
+    ],
+    treat:[
+      "Sėdima padėtis pagal būklę.",
+      "Deguonis 10–15 l/min per kaukę su rezervuaru.",
+      "Diuretikas pagal protokolą.",
+      "Nitroglicerinas, jei AKS >100 mmHg.",
+      "Morfijus titruotai pagal protokolą.",
+      "Nuolat vertinti ABCD.",
+      "Monitoruoti."
+    ],
+    meds:[
+      "Furozemidas – 20–80 mg i/v, iki 160 mg pagal protokolą.",
+      "Nitroglicerinas po liežuviu kas 5 min. iki 3 tablečių, jei AKS >100 mmHg.",
+      "Morfijus titruotai."
+    ],
+    dilution:[],
+    red:[
+      "SpO₂ kritimas nepaisant deguonies.",
+      "Cianozė.",
+      "Sąmonės sutrikimas.",
+      "Hipotenzija arba šoko požymiai.",
+      "Putoti skrepliai.",
+      "Ūmus krūtinės skausmas."
+    ],
+    children:[]
+  },
+  {
+    t:"Hipotermija",
+    icon:"cold",
+    c:"blueC",
+    d:"Skubi būklė",
+    cat:"Aplinkos poveikis",
+    k:"hipotermija sušalimas šaltis bradikardija bradipnėja osborno banga",
+    fast:[
+      "ABCDE – ieškoti priežasčių, dėl ko pacientas sušalo.",
+      "Pernešti į šiltą aplinką.",
+      "Nuimti drėgnus rūbus ir batus.",
+      "Šiltai įvynioti kūną į šildomą plėvelę.",
+      "Dėti šiltus skysčius ant kraujagyslių: kaklas, pažastys, kirkšnys.",
+      "Deguonis per veido kaukę vidutinės ir sunkios hipotermijos atveju 10–15 l/min.",
+      "Ventiliuoti, jei kvėpavimo nepakankamumas.",
+      "EKG ir šerdinės temperatūros matavimas.",
+      "Monitoruoti.",
+      "Punktuoti veną.",
+      "Neslopinti drebėjimo.",
+      "Jei sąmoningas – duoti gerti šiltų skysčių.",
+      "Sekti ABCDE.",
+      "SAMPLE."
+    ],
+    sym:[
+      "Hipotermija gali ištikti nebūtinai minusinėje temperatūroje.",
+      "Dažniausiai nukenčia neblaivūs asmenys.",
+      "Sušalęs pacientas laikomas mirusiu tik tada, kai kūno temperatūra pakeliama iki tam tikros ribos.",
+      "Jei rankos ir kojos sustingę ir sulenktos – nenaudoti jėgos jas atitaisant.",
+      "Sąmoningas ir dreba; kai trinka sąmonė – gali nebedrebėti.",
+      "Nesąmoningas, nekvėpuoja, gali atrodyti miręs.",
+      "Lokalūs šalčio pažeidimai: odos paraudimas, pūslės, skausmas, nekrozė.",
+      "Bradikardija ir bradipnėja."
+    ],
+    treat:[
+      "Pasyvus ir aktyvus šildymas pagal būklę.",
+      "Vengti grubaus judinimo dėl aritmijų rizikos.",
+      "Deguonis 10–15 l/min vidutinės ir sunkios hipotermijos atvejais.",
+      "Ventiliuoti, jei kvėpavimo nepakankamumas.",
+      "EKG – galima Osborno banga.",
+      "Monitoruoti.",
+      "Šilti i/v skysčiai pagal protokolą.",
+      "Sekti ABCDE."
+    ],
+    meds:[],
+    dilution:[
+      "Punktuoti veną – šilti 40–42 °C skysčiai."
+    ],
+    red:[
+      "Sąmonės sutrikimas.",
+      "Nėra drebulio esant šalčiui.",
+      "Bradikardija.",
+      "Bradipnėja.",
+      "Aritmijos.",
+      "Įtariama sunki hipotermija."
+    ],
+    children:[]
+  },
+  {
+    t:"Meningitas / meningokokinė infekcija",
+    icon:"brain",
+    c:"redC",
+    d:"Kritinė būklė",
+    cat:"Infekcijos",
+    k:"meningitas meningokokas karščiavimas sprando rigidiškumas bėrimas sepsis petechijos",
+    fast:[
+      "ABCDE.",
+      "Įvertinti sąmonę, temperatūrą, bėrimą, meninginius simptomus.",
+      "Deguonis 10–15 l/min.",
+      "Punktuoti veną.",
+      "Jei įtariamas sepsis – elgtis kaip su kritine būkle.",
+      "Sekti ABCDE.",
+      "Transportuoti pacientui patogioje padėtyje."
+    ],
+    sym:[
+      "Didelis galvos skausmas.",
+      "Aukšta temperatūra 39–40 °C.",
+      "Pykinimas, vėmimas.",
+      "Būdinga antalginė padėtis: atlošta galva, sulenktos kojos pritrauktos prie pilvo, sulenktos rankos.",
+      "Ligoniai guli užsimerkę, prašo užtemdyti kambarį, vengia kalbėti.",
+      "Dvejinimasis akyse, žvairumas.",
+      "Atsiranda bėrimas, kuris paspaudus nepabąla.",
+      "Gali sutrikti širdies veikla.",
+      "Vaikams ligos pradžioje gali būti viduriavimas, vėliau viduriai užkietėja.",
+      "Kūdikiams dažni traukuliai.",
+      "Teigiami meninginiai simptomai: sprando rigidiškumas, Kernigo, Brudzinskio simptomai."
+    ],
+    treat:[
+      "Deguonis 10–15 l/min.",
+      "Antibiotikas pagal protokolą.",
+      "Skysčiai pagal būklę.",
+      "Deksametazonas pagal protokolą.",
+      "Antipiretikai, jei temperatūra >38,5 °C ir per paskutines 4 val. nevartojo.",
+      "Sekti ABCDE.",
+      "Transportuoti pacientui patogioje padėtyje."
+    ],
+    meds:[
+      "Penicilinas smūginė dozė: suaugusiems 6 mln. VV i/v.",
+      "Vaikams Penicilinas: 50–100 tūkst. VV/kg.",
+      "Deksametazonas – 8 mg.",
+      "Paracetamolis – 500 mg, jei temperatūra >38,5 °C ir nevartojo per paskutines 4 val.",
+      "Ibuprofenas – 400–800 mg, jei temperatūra >38,5 °C ir nevartojo per paskutines 4 val."
+    ],
+    dilution:[
+      "NaCl 0,9 % – 250 ml lašinė infuzija.",
+      "Vaikams skysčiai – 20 ml/kg.",
+      "Jei AKS <90 mmHg – 0,9 % NaCl 500 ml boliusu.",
+      "Jei nėra reakcijos – iki 2000 ml pagal būklę ir protokolą."
+    ],
+    red:[
+      "Bėrimas, kuris paspaudus nepabąla.",
+      "Sąmonės sutrikimas.",
+      "Hipotenzija arba šoko požymiai.",
+      "Traukuliai.",
+      "Sprando rigidiškumas su karščiavimu.",
+      "Įtariama meningokokinė infekcija."
+    ],
+    children:[]
+  },
+  {
+    t:"Bronchinė astma",
+    icon:"lungs",
+    c:"cyanC",
+    d:"Skubi būklė",
+    cat:"Kvėpavimas",
+    k:"bronchinė astma astmos priepuolis salbutamolis deksametazonas švokštimas dusulys cianozė",
+    fast:[
+      "ABCDE.",
+      "Sėdima padėtis.",
+      "Deguonis 2–6 l/min.",
+      "Esant blogai būklei – deguonis 10–15 l/min.",
+      "Salbutamolis pagal protokolą.",
+      "Stebėti SpO₂, kvėpavimą, sąmonę."
+    ],
+    sym:[
+      "Priverstinė padėtis.",
+      "Dusulys, švilpiantis kvėpavimas, sausi cypiantys karkalai.",
+      "Padidėjęs AKS, tachikardija.",
+      "Būklei blogėjant – bradikardija, hipotenzija.",
+      "Sąmonės sutrikimai.",
+      "Kvėpavimo nepakankamumo požymiai – dalyvauja pagalbiniai raumenys.",
+      "Veido cianozė."
+    ],
+    treat:[
+      "Sėdima padėtis.",
+      "Deguonis pagal būklę.",
+      "Bronchodilatatorius pagal protokolą.",
+      "Gliukokortikoidas pagal protokolą.",
+      "Skysčiai pagal aplinkybes.",
+      "Nuolatinis būklės stebėjimas."
+    ],
+    meds:[
+      "Salbutamolis – 2 papurškimai kas 15–20 min. iki 4 kartų, jei prieš tai nenaudojo.",
+      "Deksametazonas – 8 mg i/v."
+    ],
+    dilution:[
+      "NaCl 0,9 % – 250 ml pagal aplinkybes."
+    ],
+    red:[
+      "Tylūs plaučiai.",
+      "Cianozė.",
+      "Sąmonės sutrikimas.",
+      "Bradikardija arba hipotenzija.",
+      "Išsekimas, negali kalbėti."
+    ],
+    children:[]
+  },
+  {
+    t:"Miokardo infarktas",
+    icon:"heart",
+    c:"whiteC",
+    d:"Kritinė būklė",
+    cat:"Kardiologija",
+    k:"miokardo infarktas krūtinės skausmas EKG STEMI aspirinas morfijus tikagreloras",
+    fast:[
+      "Nuraminti pacientą.",
+      "ABCDE.",
+      "Įvertinti krūtinės skausmo pobūdį ir trukmę.",
+      "EKG kuo anksčiau.",
+      "Monitoruoti.",
+      "Deguonis, jei SpO₂ <90 %.",
+      "SPS pranešimas.",
+      "Transportuojant sekti paciento būklę."
+    ],
+    sym:[
+      "Skausmas krūtinėje trunka ilgiau nei 15 min.",
+      "Nutraukus fizinį krūvį, skausmas neišnyksta.",
+      "Skausmas gali plisti į skrandį, vieną ar abi rankas, petį, alkūnę, mentę, nugarą, tarp menčių, apatinį žandikaulį, kaklą.",
+      "Cukriniu diabetu sergantys pacientai infarkto skausmo gali nejausti.",
+      "Oda blyški, kartais cianotiška, išpilta šalto prakaito.",
+      "Nepaaiškinamas dusulys gali būti su krūtinės skausmu arba be jo.",
+      "Galvos svaigimas, alpimas, pykinimas, vėmimas."
+    ],
+    treat:[
+      "Deguonis 2–4 l/min, jei SpO₂ <90 %.",
+      "Aspirinas, jei nėra kontraindikacijų.",
+      "Morfijus titruotai pagal skausmą.",
+      "Trankviliantai, jei pacientas neramus, pagal protokolą.",
+      "Tikagreloras STEMI atveju tik suderinus su KITS ir jei nėra kontraindikacijų.",
+      "EKG kartoti kas 10–15 min.",
+      "SPS pranešimas.",
+      "Transportuojant sekti paciento būklę ir monitoruoti."
+    ],
+    meds:[
+      "Aspirinas – 150–300 mg sukramtyti ir užgerti nedideliu kiekiu vandens, jei nėra kontraindikacijų.",
+      "Morfijus – titruotai pagal skausmą.",
+      "Tikagreloras – 180 mg, STEMI atveju tik suderinus su KITS ir jei nėra kontraindikacijų."
+    ],
+    dilution:[],
+    red:[
+      "STEMI požymiai EKG.",
+      "Hipotenzija arba šokas.",
+      "Sąmonės sutrikimas.",
+      "Gyvybei pavojingi ritmo sutrikimai.",
+      "Nuolatinis stiprus skausmas.",
+      "Aktyvus kraujavimas arba buvęs kraujavimas į smegenis – svarbu prieš tikagrelorą."
+    ],
+    children:[]
   }
 ];
-
 const abcde = [
   ["A","Airway","Kvėpavimo takai","Ar kvėpavimo takai praeinami?","#E52A2C"],
   ["B","Breathing","Kvėpavimas","Įvertinti kvėpavimą, SpO2.","#F97316"],
