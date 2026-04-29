@@ -199,23 +199,6 @@ button,input{
   width:100%;
 }
 
-.call{
-  margin-top:16px;
-  border:0;
-  border-radius:15px;
-  background:linear-gradient(135deg,#E11D22,#A50F15);
-  color:white;
-  width:100%;
-  padding:18px;
-  font-weight:950;
-  font-size:18px;
-  box-shadow:0 16px 35px rgba(239,43,45,.25);
-  display:flex;
-  gap:14px;
-  align-items:center;
-  justify-content:center;
-}
-
 .list{
   display:flex;
   flex-direction:column;
@@ -404,57 +387,6 @@ button,input{
   font-size:14px;
 }
 
-.timeline{
-  position:relative;
-  margin:8px 0 0;
-  padding-left:36px;
-}
-
-.timeline:before{
-  content:"";
-  position:absolute;
-  left:13px;
-  top:10px;
-  bottom:10px;
-  width:2px;
-  background:#EF2B2D;
-}
-
-.timeItem{
-  position:relative;
-  background:rgba(255,255,255,.055);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:13px;
-  margin:12px 0;
-}
-
-.timeDot{
-  position:absolute;
-  left:-35px;
-  top:15px;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background:#03101C;
-  border:1px solid #EF2B2D;
-  color:white;
-  font-size:10px;
-  display:grid;
-  place-items:center;
-}
-
-.stable{
-  margin:22px 0 0;
-  width:100%;
-  border:0;
-  background:linear-gradient(135deg,#EF2B2D,#B91519);
-  color:white;
-  border-radius:15px;
-  padding:16px;
-  font-weight:950;
-}
-
 .abcdeItem{
   display:flex;
   align-items:center;
@@ -580,15 +512,14 @@ button,input{
 
   <div class="sectionTitle">Kritinės būklės</div>
   <div id="quickGrid" class="quickGrid"></div>
-<section id="detail" class="page">
-  <div id="detailBox"></div>
+
+  <button class="wideAction" onclick="show('protocols')">
+    KITI ALGORITMAI <span>›</span>
+  </button>
 </section>
 
-<section id="timer" class="page">
-  <button class="wideAction" onclick="show('protocols')">
-  KITI ALGORITMAI <span>›</span>
-</button>
-  <div id="timerBox"></div>
+<section id="detail" class="page">
+  <div id="detailBox"></div>
 </section>
 
 <section id="abcde" class="page">
@@ -1014,42 +945,13 @@ function openD(i){
       <p class="infoText">${x.sym.join("<br>")}</p>
     </div>
 
-    <button class="stable" onclick="openTimer(${i})">60 SEK. ALGORITMAS</button>
+    <div class="panel">
+      <h3>Gydymo principai</h3>
+      ${steps(x.treat)}
+    </div>
   `;
 
   show("detail");
-}
-
-function openTimer(i){
-  const x = data[i];
-  const times = ["00:00","00:10","00:30","00:45","01:15"];
-
-  document.getElementById("timerBox").innerHTML = `
-    <div class="top">
-      <button class="back" onclick="openD(${i})">‹</button>
-      <h2>${x.t}</h2>
-      <button class="back">☆</button>
-    </div>
-
-    <div style="text-align:center;margin:10px 0 20px">
-      <h3 style="color:#FF3B3B;margin:0">60 SEK. REŽIMAS</h3>
-      <p class="tiny">Pirmos minutės veiksmai</p>
-    </div>
-
-    <div class="timeline">
-      ${x.fast.slice(0,5).map((s,idx)=>`
-        <div class="timeItem">
-          <div class="timeDot">${times[idx]}</div>
-          <h3 style="margin:0 0 6px">${s}</h3>
-          <p class="tiny">Veiksmas atliekamas pagal paciento būklę ir vietinį protokolą.</p>
-        </div>
-      `).join("")}
-    </div>
-
-    <button class="stable">PACIENTO BŪKLĖ STABILI</button>
-  `;
-
-  show("timer");
 }
 
 function renderAbcde(){
