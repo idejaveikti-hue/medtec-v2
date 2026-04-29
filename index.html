@@ -749,155 +749,62 @@ const data = [
     children:[]
   },
     {
-  t:"Hipoglikemija",
-  icon:"glucose",
-  c:"whiteC",
-  d:"Kritinė būklė",
-  cat:"Endokrinologija",
-  k:"hipoglikemija gliukoze cukrus diabetas koma prakaitavimas glikemija",
-  fast:[
-    "Jei gliukozes kiekis kraujyje <3,33 mmol/l – vertinti kaip hipoglikemija.",
-    "ABCDE istyrimas.",
-    "Pamatuoti glikemija.",
-    "Samoningam pacientui – gliukoze per os.",
-    "Nesamoningam pacientui – deguonis per veido kauke 10–15 l/min, jei reikia atverti kvepavimo takus, punktuoti vena.",
-    "Hipoglikemijos metu glikemija matuoti po 5 min."
-  ],
-  sym:[
-    "Ankstyvas pozymis gali buti pasikeites elgesys.",
-    "Galvos skausmas.",
-    "Mieguistumas.",
-    "Prakaitavimas.",
-    "Veliau – samones sutrikimas, koma."
-  ],
-  treat:[
-    "Samoningam: deguonis 2–4 l/min pagal SpO2.",
-    "Nesamoningam: jei reikia, atverti kvepavimo takus.",
-    "Punktuoti vena.",
-    "Atgavus samone – ABCDE istyrimas, EKG, Cincinnati.",
-    "Transportuoti pacientui patogioje padetyje.",
-    "SAMPLE."
-  ],
-  meds:[
-    "Samoningam pacientui: gliukoze – 15 g per os.",
-    "Gliukozes pavyzdziai: 3 sauksteliai medaus, 3 gliukozes tabletes arba saldi arbata.",
-    "Nesamoningam pacientui: 40 % gliukozes tirpalas – iki 60 ml i/v.",
-    "Gliukagonas – 1 mg i/m, jei nepavyko punktuoti venos."
-  ],
-  dilution:[
-    "Glikemija matuoti po 5 min.",
-    "Po samones atgavimo atlikti ABCDE, EKG, Cincinnati."
-  ],
-  red:[
-    "Samones sutrikimas.",
-    "Koma.",
-    "Traukuliai.",
-    "Nepagereja po gliukozes korekcijos."
-  ],
-  children:[]
-},
-{
-  t:"Miokardo infarktas",
-  icon:"heart",
-  c:"whiteC",
-  d:"Kritinė būklė",
-  cat:"Kardiologija",
-  k:"infarktas miokardo krutines skausmas EKG STEMI aspirinas dusulys prakaitavimas",
-  fast:[
-    "Nuraminti pacienta.",
-    "ABCDE.",
-    "EKG ir monitoravimas.",
-    "Deguonis, jei SpO2 <90 %.",
-    "SPS pranesimas.",
-    "Transportuojant sekti paciento bukle ir monitoruoti."
-  ],
-  sym:[
-    "Skausmas krutineje trunka ilgiau nei 15 min.",
-    "Nutraukus fizini kruvi, skausmas neisnyksta.",
-    "Skausmas gali plisti i skrandi, viena ar abi rankas, peti, alkune, mente arba nugara, tarp menciu, apatini zandikauli, kakla.",
-    "Cukriniu diabetu sergantys pacientai IM skausmo gali nejausti.",
-    "Oda blyski, kartais cianotiska, ispilta salto prakaito.",
-    "Nepaaiskinamas dusulys, kuris gali atsirasti kartu su krutines skausmu arba be jo.",
-    "Gali buti galvos svaigimas, alpimas, pykinimas, vemimas."
-  ],
-  treat:[
-    "EKG kartoti kas 10–15 min.",
-    "SPS pranesimas.",
-    "Transportuojant sekti paciento bukle ir monitoruoti."
-  ],
-  meds:[
-    "Deguonis – 2–4 l/min, jei SpO2 <90 %.",
-    "Aspirinas – 150–300 mg, sukramtyti ir uzgerti nedideliu kiekiu vandens, jei nera kontraindikaciju.",
-    "Morfinas – titruotai pagal skausma.",
-    "Trankviliantai – jei pacientas neramus.",
-    "Tikagreloras – 180 mg, STEMI atveju tik suderinus su KITS ir jei nera kontraindikaciju."
-  ],
-  dilution:[
-    "EKG kartoti kas 10–15 min.",
-    "Transportuojant stebeti paciento bukle ir monitoruoti."
-  ],
-  red:[
-    "Krutines skausmas >15 min.",
-    "SpO2 <90 %.",
-    "Soko pozymiai.",
-    "Samones sutrikimas.",
-    "Ritmo sutrikimai."
-  ],
-  children:[]
-},
-{
-  t:"Plaučių edema",
-  icon:"lungs",
-  c:"cyanC",
-  d:"Kritinė būklė",
-  cat:"Kvepavimas / kardiologija",
-  k:"plauciu edema dusulys sirdies nepakankamumas karkalai furozemidas nitroglicerinas morfinas",
-  fast:[
-    "Nuraminti pacienta.",
-    "ABCDE, AKS, pulsoksimetras, EKG.",
-    "Uztikrinti kvepavimo taku praeinamuma.",
-    "Punktuoti vena.",
-    "Sedima padetis pagal bukle, nuleistomis kojomis.",
-    "Deguonis per kauke su maisu 10–15 l/min."
-  ],
-  sym:[
-    "Daznas kvepavimas.",
-    "Svilpiantys, bet dazniausiai dregni karkalai, isklausomi apie 50 % plauciu ploto ir daugiau.",
-    "Dusulys.",
-    "Putoti skrepliai.",
-    "Kosulys.",
-    "AKS aukstas esant hipertenzinei krizei, zemas esant sokui.",
-    "Priverstine sedima padetis, nuleistomis kojomis.",
-    "Salta, dregna, melsvo atspalvio oda.",
-    "Issiputusios kaklo venos."
-  ],
-  treat:[
-    "ABCD pastoviai vertinti.",
-    "Monitoruoti.",
-    "Stebeti AKS, SpO2, EKG ir kvepavimo bukle."
-  ],
-  meds:[
-    "Deguonis – per kauke su maisu 10–15 l/min.",
-    "Furozemidas – 20–80 mg i/v, galima iki 160 mg.",
-    "Nitroglicerinas – po liezuviu kas 5 min. iki 3 tableciu, jei AKS >100 mmHg.",
-    "Morfinas – titruotai."
-  ],
-  dilution:[
-    "Punktuoti vena.",
-    "ABCD pastoviai vertinti.",
-    "Monitoruoti AKS, SpO2, EKG."
-  ],
-  red:[
-    "Kvepavimo nepakankamumas.",
-    "SpO2 blogejimas.",
-    "Sokas arba zemas AKS.",
-    "Melsva, salta, dregna oda.",
-    "Samones blogejimas."
-  ],
-  children:[]
-}
+    t:"Hipoglikemija",
+    icon:"glucose",
+    c:"whiteC",
+    d:"Kritinė būklė",
+    cat:"Endokrinologija",
+    k:"hipoglikemija gliukoze cukrus diabetas koma prakaitavimas glikemija",
+    fast:[
+      "Jei gliukozes kiekis kraujyje <3,33 mmol/l – vertinti kaip hipoglikemija.",
+      "ABCDE istyrimas.",
+      "Pamatuoti glikemija.",
+      "Samoningam pacientui – gliukoze per os.",
+      "Nesamoningam pacientui – deguonis per veido kauke 10–15 l/min, jei reikia atverti kvepavimo takus, punktuoti vena.",
+      "Hipoglikemijos metu glikemija matuoti po 5 min."
+    ],
+    sym:[
+      "Ankstyvas pozymis gali buti pasikeites elgesys.",
+      "Galvos skausmas.",
+      "Mieguistumas.",
+      "Prakaitavimas.",
+      "Veliau – samones sutrikimas, koma."
+    ],
+    treat:[
+      "Samoningam: deguonis 2–4 l/min pagal SpO2.",
+      "Nesamoningam: jei reikia, atverti kvepavimo takus.",
+      "Punktuoti vena.",
+      "Atgavus samone – ABCDE istyrimas, EKG, Cincinnati.",
+      "Transportuoti pacientui patogioje padetyje.",
+      "SAMPLE."
+    ],
+    meds:[
+      "Samoningam pacientui: gliukoze – 15 g per os.",
+      "Gliukozes pavyzdziai: 3 sauksteliai medaus, 3 gliukozes tabletes arba saldi arbata.",
+      "Nesamoningam pacientui: 40 % gliukozes tirpalas – iki 60 ml i/v.",
+      "Gliukagonas – 1 mg i/m, jei nepavyko punktuoti venos."
+    ],
+    dilution:[
+      "Glikemija matuoti po 5 min.",
+      "Po samones atgavimo atlikti ABCDE, EKG, Cincinnati."
+    ],
+    red:[
+      "Samones sutrikimas.",
+      "Koma.",
+      "Traukuliai.",
+      "Nepagereja po gliukozes korekcijos."
+    ],
+    children:[]
+  }
 ];
 
+const abcde = [
+  ["A","Airway","Kvėpavimo takai","Ar kvėpavimo takai praeinami?","#E52A2C"],
+  ["B","Breathing","Kvėpavimas","Įvertinti kvėpavimą, SpO2.","#F97316"],
+  ["C","Circulation","Kraujotaka","AKS, pulsas, EKG, kraujavimas.","#F59E0B"],
+  ["D","Disability","Neurologinė būklė","GKS, vyzdžiai, glikemija.","#2F80ED"],
+  ["E","Exposure","Apžiūra","Apžiūrėti visą kūną, temperatūra.","#22C55E"]
+];
 const abcde = [
   ["A","Airway","Kvėpavimo takai","Ar kvėpavimo takai praeinami?","#E52A2C"],
   ["B","Breathing","Kvėpavimas","Įvertinti kvėpavimą, SpO2.","#F97316"],
