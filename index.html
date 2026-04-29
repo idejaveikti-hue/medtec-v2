@@ -619,7 +619,6 @@ button,input{
     Daugiau
   </button>
 </nav>
-
 <script>
 const icons = {
   bolt: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
@@ -629,14 +628,14 @@ const icons = {
   glucose: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M8 7l8 10M16 7L8 17" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="5" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2"/></svg>',
   heart: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M20 8c0 6-8 11-8 11S4 14 4 8a4 4 0 017-2 4 4 0 019 2z" stroke="currentColor" stroke-width="1.8"/><path d="M4 12h4l2-3 3 6 2-3h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
   brain: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M9 4a4 4 0 00-4 4c-2 1-2 5 0 6a4 4 0 004 5M15 4a4 4 0 014 4c2 1 2 5 0 6a4 4 0 01-4 5M12 4v16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  temp: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M10 14.5V5a2 2 0 114 0v9.5a5 5 0 11-4 0z" stroke="currentColor" stroke-width="2"/></svg>',
+  cold: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M5 7l14 10M19 7L5 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  abdomen: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M8 5c-2 4-3 8-1 12 2 4 8 4 10 0 2-4 1-8-1-12M9 10h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
   home: '<svg viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9z" stroke="currentColor" stroke-width="2"/></svg>',
   abc: '<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 15V9h3a2 2 0 010 4H9M14 15l1-2 1 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   bag: '<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="7" width="12" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 7V5a3 3 0 016 0v2M12 11v5M9.5 13.5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
   protocol: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v16H7z" stroke="currentColor" stroke-width="2"/><path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-  more: '<svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="19" cy="12" r="1.7" fill="currentColor"/></svg>',
-  temp: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M10 14.5V5a2 2 0 114 0v9.5a5 5 0 11-4 0z" stroke="currentColor" stroke-width="2"/></svg>',
-  cold: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M5 7l14 10M19 7L5 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-  abdomen: '<svg class="lineIcon" viewBox="0 0 24 24" fill="none"><path d="M8 5c-2 4-3 8-1 12 2 4 8 4 10 0 2-4 1-8-1-12M9 10h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+  more: '<svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="12" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><circle cx="19" cy="12" r="1.7" fill="currentColor"/></svg>'
 };
 
 function svg(name){
@@ -649,6 +648,7 @@ document.querySelectorAll("[data-icon]").forEach(el=>{
 
 document.getElementById("starLogo").innerHTML =
   '<svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M5 5l14 14M19 5L5 19" stroke="white" stroke-width="2.2" stroke-linecap="round"/><path d="M12 2l3 4h5l-4 4 4 4h-5l-3 4-3-4H4l4-4-4-4h5l3-4z" stroke="#60A5FA" stroke-width="1.5"/></svg>';
+
 const data = [
   {
     t:"Traukuliai",
@@ -667,7 +667,7 @@ const data = [
     sym:[
       "Traukuliai arba pasikartojantys epizodai.",
       "Sąmonės sutrikimas po traukulių.",
-      "Įvertinti: ar buvo traukuliai anksčiau, ar vartoja vaistus nuo epilepsijos, ar nekarščiuoja, ar neserga CD, ar nėra nėštumo, ar nebuvo galvos traumos, narkotikų vartojimo, insulto, alkoholio nutraukimo."
+      "Įvertinti, ar buvo traukuliai anksčiau, ar vartoja vaistus nuo epilepsijos, ar nekarščiuoja, ar neserga CD, ar nėra nėštumo, ar nebuvo galvos traumos, narkotikų vartojimo, insulto, alkoholio nutraukimo."
     ],
     treat:[
       "Po traukulių: jei reikia atverti kvėpavimo takus, stebėti sąmonės būklę.",
@@ -795,42 +795,129 @@ const data = [
       "Nepagerėja po gliukozės korekcijos."
     ],
     children:[]
-  }
-];const data = [
-  {
-    t:"Traukuliai",
-    ...
   },
   {
-    t:"Anafilaksija",
-    ...
+    t:"Miokardo infarktas",
+    icon:"heart",
+    c:"whiteC",
+    d:"Kritinė būklė",
+    cat:"Kardiologija",
+    k:"infarktas miokardo krūtinės skausmas EKG STEMI aspirinas dusulys prakaitavimas",
+    fast:[
+      "Nuraminti pacientą.",
+      "ABCDE.",
+      "EKG ir monitoravimas.",
+      "Deguonis, jei SpO₂ <90 %.",
+      "SPS pranešimas.",
+      "Transportuojant sekti paciento būklę ir monitoruoti."
+    ],
+    sym:[
+      "Skausmas krūtinėje trunka ilgiau nei 15 min.",
+      "Nutraukus fizinį krūvį, skausmas neišnyksta.",
+      "Skausmas gali plisti į skrandį, vieną ar abi rankas, petį, alkūnę, mentę arba nugarą, tarp menčių, apatinį žandikaulį, kaklą.",
+      "Cukriniu diabetu sergantys pacientai IM skausmo gali nejausti.",
+      "Oda blyški, kartais cianotiška, išpilta šalto prakaito.",
+      "Nepaaiškinamas dusulys, kuris gali atsirasti kartu su krūtinės skausmu arba be jo.",
+      "Gali būti galvos svaigimas, alpimas, pykinimas, vėmimas."
+    ],
+    treat:[
+      "EKG kartoti kas 10–15 min.",
+      "SPS pranešimas.",
+      "Transportuojant sekti paciento būklę ir monitoruoti."
+    ],
+    meds:[
+      "Deguonis – 2–4 l/min, jei SpO₂ <90 %.",
+      "Aspirinas – 150–300 mg, sukramtyti ir užgerti nedideliu kiekiu vandens, jei nėra kontraindikacijų.",
+      "Morfinas – titruotai pagal skausmą.",
+      "Trankviliantai – jei pacientas neramus.",
+      "Tikagreloras – 180 mg, STEMI atveju tik suderinus su KITS ir jei nėra kontraindikacijų."
+    ],
+    dilution:[
+      "EKG kartoti kas 10–15 min.",
+      "Transportuojant stebėti paciento būklę ir monitoruoti."
+    ],
+    red:[
+      "Krūtinės skausmas >15 min.",
+      "SpO₂ <90 %.",
+      "Šoko požymiai.",
+      "Sąmonės sutrikimas.",
+      "Ritmo sutrikimai."
+    ],
+    children:[]
   },
   {
-    t:"Hipoglikemija",
-    ...
+    t:"Plaučių edema",
+    icon:"lungs",
+    c:"cyanC",
+    d:"Kritinė būklė",
+    cat:"Kvėpavimas / kardiologija",
+    k:"plaučių edema dusulys širdies nepakankamumas karkalai furozemidas nitroglicerinas morfinas",
+    fast:[
+      "Nuraminti pacientą.",
+      "ABCDE, AKS, pulsoksimetras, EKG.",
+      "Užtikrinti kvėpavimo takų praeinamumą.",
+      "Punktuoti veną.",
+      "Sėdima padėtis pagal būklę, nuleistomis kojomis.",
+      "Deguonis per kaukę su maišu 10–15 l/min."
+    ],
+    sym:[
+      "Dažnas kvėpavimas.",
+      "Švilpiantys, bet dažniausiai drėgni karkalai, išklausomi apie 50 % plaučių ploto ir daugiau.",
+      "Dusulys.",
+      "Putoti skrepliai.",
+      "Kosulys.",
+      "AKS aukštas esant hipertenzinei krizei, žemas esant šokui.",
+      "Priverstinė sėdima padėtis, nuleistomis kojomis.",
+      "Šalta, drėgna, melsvo atspalvio oda.",
+      "Išsipūtusios kaklo venos."
+    ],
+    treat:[
+      "ABCD pastoviai vertinti.",
+      "Monitoruoti.",
+      "Stebėti AKS, SpO₂, EKG ir kvėpavimo būklę."
+    ],
+    meds:[
+      "Deguonis – per kaukę su maišu 10–15 l/min.",
+      "Furozemidas – 20–80 mg i/v, galima iki 160 mg.",
+      "Nitroglicerinas – po liežuviu kas 5 min. iki 3 tablečių, jei AKS >100 mmHg.",
+      "Morfinas – titruotai."
+    ],
+    dilution:[
+      "Punktuoti veną.",
+      "ABCD pastoviai vertinti.",
+      "Monitoruoti AKS, SpO₂, EKG."
+    ],
+    red:[
+      "Kvėpavimo nepakankamumas.",
+      "SpO₂ blogėjimas.",
+      "Šokas arba žemas AKS.",
+      "Melsva, šalta, drėgna oda.",
+      "Sąmonės blogėjimas."
+    ],
+    children:[]
   }
 ];
 
 const abcde = [
   ["A","Airway","Kvėpavimo takai","Ar kvėpavimo takai praeinami?","#E52A2C"],
-  ["B","Breathing","Kvėpavimas","Įvertinti kvėpavimą, SpO₂","#F97316"],
-  ["C","Circulation","Kraujotaka","AKS, pulsas, EKG, kraujavimas","#F59E0B"],
-  ["D","Disability","Neurologinė būklė","GKS, vyzdžiai, glikemija","#2F80ED"],
-  ["E","Exposure","Apžiūra","Apžiūrėti visą kūną, temperatūra","#22C55E"]
+  ["B","Breathing","Kvėpavimas","Įvertinti kvėpavimą, SpO₂.","#F97316"],
+  ["C","Circulation","Kraujotaka","AKS, pulsas, EKG, kraujavimas.","#F59E0B"],
+  ["D","Disability","Neurologinė būklė","GKS, vyzdžiai, glikemija.","#2F80ED"],
+  ["E","Exposure","Apžiūra","Apžiūrėti visą kūną, temperatūra.","#22C55E"]
 ];
 
 const drugs = [
-  ["Diazepamas 10 mg/2 ml","10 mg i/v lėtai","SKUBUS","blueC","abc"],
-  ["Midazolamas 5 mg/ml","5 mg i/v arba i/m","SKUBUS","blueC","abc"],
-  ["Adrenalinas 1 mg/ml","1 mg (1 ml) i/m","SKUBUS","cyanC","bag"],
-  ["Deksametazonas 4 mg/ml","8 mg i/v","INFUZIJA","whiteC","protocol"],
-  ["Tavegilis 1 mg/ml","2–4 ml i/v","INFUZIJA","greenC","bag"],
-  ["Furosemidas 10 mg/ml","20–40 mg i/v","INFUZIJA","whiteC","drop"],
-  ["Ketaminas 30 mg/ml","30 mg i/v","ANALGETIKAS","blueC","protocol"],
-  ["Morfinas 10 mg/ml","2–4 mg i/v titruotai","ANALGETIKAS","blueC","protocol"]
+  ["Diazepamas","10 mg i/v iki suminės 30 mg dozės","SKUBUS","blueC","abc"],
+  ["Midazolamas","5 mg","SKUBUS","blueC","abc"],
+  ["Adrenalinas","0,5 ml i/m kas 5 min","SKUBUS","cyanC","bag"],
+  ["Deksametazonas","8 mg i/v","SKUBUS","whiteC","protocol"],
+  ["Tavegilis","2–4 ml i/v","INFUZIJA","greenC","bag"],
+  ["Furozemidas","20–80 mg i/v iki 160 mg","INFUZIJA","whiteC","drop"],
+  ["Aspirinas","150–300 mg sukramtyti","SKUBUS","whiteC","heart"],
+  ["Morfinas","titruotai pagal skausmą","ANALGETIKAS","blueC","protocol"]
 ];
 
-function show(id,btn){
+function show(id, btn){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 
@@ -845,10 +932,11 @@ function show(id,btn){
 function renderHome(){
   const q = (document.getElementById("q")?.value || "").toLowerCase();
   const quick = document.getElementById("quickGrid");
+
   quick.innerHTML = "";
 
   data
-    .filter(x=>(x.t+" "+x.k).toLowerCase().includes(q))
+    .filter(x => (x.t + " " + x.k).toLowerCase().includes(q))
     .slice(0,6)
     .forEach((x,i)=>{
       quick.innerHTML += `
@@ -864,13 +952,14 @@ function renderHome(){
 }
 
 function steps(arr){
-  return arr.map((x,i)=>`
+  return (arr || []).map((x,i)=>`
     <div class="step">
       <span class="num">${i+1}</span>
       <p>${x}</p>
     </div>
   `).join("");
 }
+
 function openD(i){
   const x = data[i];
 
@@ -901,7 +990,7 @@ function openD(i){
 
     <div class="panel">
       <h3>Pirmos minutės</h3>
-      ${steps(x.fast || [])}
+      ${steps(x.fast)}
     </div>
 
     <div class="panel">
@@ -911,7 +1000,7 @@ function openD(i){
 
     <div class="panel">
       <h3>Gydymo principai</h3>
-      ${steps(x.treat || [])}
+      ${steps(x.treat)}
     </div>
 
     ${x.meds && x.meds.length ? `
@@ -945,6 +1034,8 @@ function openD(i){
 
   show("detail");
 }
+
+function renderAbcde(){
   document.getElementById("abcdeList").innerHTML = abcde.map(a=>`
     <div class="row abcdeItem">
       <div class="letter" style="background:${a[4]}">${a[0]}</div>
@@ -974,7 +1065,10 @@ function renderProtocols(){
   document.getElementById("protoList").innerHTML = data.map((x,i)=>`
     <div class="row" onclick="openD(${i})">
       <div class="rowIcon ${x.c}">${svg(x.icon)}</div>
-      <div class="rowMain"><h3>${x.t}</h3></div>
+      <div class="rowMain">
+        <h3>${x.t}</h3>
+        <p>${x.cat}</p>
+      </div>
       <span>›</span>
     </div>
   `).join("");
@@ -985,6 +1079,6 @@ renderAbcde();
 renderDrugs();
 renderProtocols();
 </script>
-
 </body>
 </html>
+
