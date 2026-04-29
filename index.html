@@ -748,56 +748,180 @@ const data = [
     ],
     children:[]
   },
-    {
-    t:"Hipoglikemija",
-    icon:"glucose",
-    c:"whiteC",
-    d:"Kritinė būklė",
-    cat:"Endokrinologija",
-    k:"hipoglikemija gliukoze cukrus diabetas koma prakaitavimas glikemija",
-    fast:[
-      "Jei gliukozes kiekis kraujyje <3,33 mmol/l – vertinti kaip hipoglikemija.",
-      "ABCDE istyrimas.",
-      "Pamatuoti glikemija.",
-      "Samoningam pacientui – gliukoze per os.",
-      "Nesamoningam pacientui – deguonis per veido kauke 10–15 l/min, jei reikia atverti kvepavimo takus, punktuoti vena.",
-      "Hipoglikemijos metu glikemija matuoti po 5 min."
-    ],
-    sym:[
-      "Ankstyvas pozymis gali buti pasikeites elgesys.",
-      "Galvos skausmas.",
-      "Mieguistumas.",
-      "Prakaitavimas.",
-      "Veliau – samones sutrikimas, koma."
-    ],
-    treat:[
-      "Samoningam: deguonis 2–4 l/min pagal SpO2.",
-      "Nesamoningam: jei reikia, atverti kvepavimo takus.",
-      "Punktuoti vena.",
-      "Atgavus samone – ABCDE istyrimas, EKG, Cincinnati.",
-      "Transportuoti pacientui patogioje padetyje.",
-      "SAMPLE."
-    ],
-    meds:[
-      "Samoningam pacientui: gliukoze – 15 g per os.",
-      "Gliukozes pavyzdziai: 3 sauksteliai medaus, 3 gliukozes tabletes arba saldi arbata.",
-      "Nesamoningam pacientui: 40 % gliukozes tirpalas – iki 60 ml i/v.",
-      "Gliukagonas – 1 mg i/m, jei nepavyko punktuoti venos."
-    ],
-    dilution:[
-      "Glikemija matuoti po 5 min.",
-      "Po samones atgavimo atlikti ABCDE, EKG, Cincinnati."
-    ],
-    red:[
-      "Samones sutrikimas.",
-      "Koma.",
-      "Traukuliai.",
-      "Nepagereja po gliukozes korekcijos."
-    ],
-    children:[]
+      children:[]
   }
 ];
 
+const abcde = [
+  ["A","Airway","Kvėpavimo takai","Ar kvėpavimo takai praeinami?","#E52A2C"],
+  ["B","Breathing","Kvėpavimas","Įvertinti kvėpavimą, SpO2.","#F97316"],
+  ["C","Circulation","Kraujotaka","AKS, pulsas, EKG, kraujavimas.","#F59E0B"],
+  ["D","Disability","Neurologinė būklė","GKS, vyzdžiai, glikemija.","#2F80ED"],
+  ["E","Exposure","Apžiūra","Apžiūrėti visą kūną, temperatūra.","#22C55E"]
+];
+
+const drugs = [
+  ["Diazepamas","10 mg i/v iki suminės 30 mg dozės","SKUBUS","blueC","abc"],
+  ["Midazolamas","5 mg","SKUBUS","blueC","abc"],
+  ["Adrenalinas","0,5 ml i/m kas 5 min","SKUBUS","cyanC","bag"],
+  ["Deksametazonas","8 mg i/v","SKUBUS","whiteC","protocol"],
+  ["Tavegilis","2–4 ml i/v","INFUZIJA","greenC","bag"]
+];
+
+function show(id, btn){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(btn){
+    document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+  }
+  window.scrollTo(0,0);
+}
+
+function renderHome(){
+  const q = (document.getElementById("q")?.value || "").toLowerCase();
+  const quick = document.getElementById("quickGrid");
+  quick.innerHTML = "";
+
+  data
+    .filter(x => (x.t + " " + x.k).toLowerCase().includes(q))
+    .slice(0,6)
+    .forEach((x,i)=>{
+      quick.innerHTML += `
+        <div class="quick ${i===0 ? "active" : ""}" onclick="openD(${data.indexOf(x)})">
+          <div class="${x.c}">${svg(x.icon)}</div>
+          <div>
+            <h3>${x.t}</h3>
+            <p>${x.cat}</p>
+          </div>
+        </div>
+      `;
+    });
+}
+
+function steps(arr){
+  return (arr || []).map((x,i)=>`
+    <div class="step">
+      <span class="num">${i+1}</span>
+      <p>${x}</p>
+    </div>
+  `).join("");
+}
+
+function openD(i){
+  const x = data[i];
+
+  document.getElementById("detailBox").innerHTML = `
+    <div class="headDetail">
+      <div class="detailTop">
+        <button class="back" onclick="show('home')">‹</button>
+        <h2>${x.t}</h2>
+        <button class="back">☆</button>
+      </div>
+
+      <div class="headCard">
+        <div class="${x.c}">${svg(x.icon)}</div>
+        <div style="flex:1">
+          <h2>${x.t}</h2>
+          <p>${x.cat}</p>
+        </div>
+        <span class="badge ${x.d.includes("Kritinė") ? "crit" : "urgent"}">${x.d}</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active">Pirmos minutės</button>
+      <button class="tab">Požymiai</button>
+      <button class="tab">Vaistai</button>
+      <button class="tab">Vaikai</button>
+    </div>
+
+    <div class="panel">
+      <h3>Pirmos minutės</h3>
+      ${steps(x.fast)}
+    </div>
+
+    <div class="panel">
+      <h3>Požymiai / atpažinimas</h3>
+      <p class="infoText">${(x.sym || []).join("<br>")}</p>
+    </div>
+
+    <div class="panel">
+      <h3>Gydymo principai</h3>
+      ${steps(x.treat)}
+    </div>
+
+    ${x.meds && x.meds.length ? `
+      <div class="panel redPanel">
+        <h3 style="color:#FF3B3B">Vaistai ir dozės</h3>
+        ${steps(x.meds)}
+      </div>
+    ` : ""}
+
+    ${x.dilution && x.dilution.length ? `
+      <div class="panel">
+        <h3>Skiedimai / infuzijos</h3>
+        ${steps(x.dilution)}
+      </div>
+    ` : ""}
+
+    ${x.red && x.red.length ? `
+      <div class="panel redPanel">
+        <h3 style="color:#FF3B3B">Raudonos vėliavos</h3>
+        <ul>${x.red.map(r=>`<li>${r}</li>`).join("")}</ul>
+      </div>
+    ` : ""}
+  `;
+
+  show("detail");
+}
+
+function renderAbcde(){
+  document.getElementById("abcdeList").innerHTML = abcde.map(a=>`
+    <div class="row abcdeItem">
+      <div class="letter" style="background:${a[4]}">${a[0]}</div>
+      <div class="rowMain">
+        <h3>${a[1]} – ${a[2]}</h3>
+        <p>${a[3]}</p>
+      </div>
+      <span>›</span>
+    </div>
+  `).join("");
+}
+
+function renderDrugs(){
+  document.getElementById("drugList").innerHTML = drugs.map(d=>`
+    <div class="row">
+      <div class="rowIcon ${d[3]}">${svg(d[4])}</div>
+      <div class="rowMain">
+        <h3>${d[0]}</h3>
+        <p>${d[1]}</p>
+      </div>
+      <span class="badge ${d[2]==="SKUBUS" ? "crit" : "urgent"}">${d[2]}</span>
+    </div>
+  `).join("");
+}
+
+function renderProtocols(){
+  document.getElementById("protoList").innerHTML = data.map((x,i)=>`
+    <div class="row" onclick="openD(${i})">
+      <div class="rowIcon ${x.c}">${svg(x.icon)}</div>
+      <div class="rowMain">
+        <h3>${x.t}</h3>
+        <p>${x.cat}</p>
+      </div>
+      <span>›</span>
+    </div>
+  `).join("");
+}
+
+renderHome();
+renderAbcde();
+renderDrugs();
+renderProtocols();
+</script>
+</body>
+</html>
 const abcde = [
   ["A","Airway","Kvėpavimo takai","Ar kvėpavimo takai praeinami?","#E52A2C"],
   ["B","Breathing","Kvėpavimas","Įvertinti kvėpavimą, SpO2.","#F97316"],
