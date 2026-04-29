@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skubi pagalba — Turinio valdymas</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0A2463;--blue:#1B4FC4;--blue-l:#E6F1FB;--blue-m:#B5D4F4;--blue-d:#0C447C;
+  --red-bg:#FCEBEB;--red-b:#F09595;--red-t:#791F1F;--red:#E24B4A;
+  --orange-bg:#FFF3E0;--orange:#EF9F27;--orange-t:#633806;
+  --green-bg:#EAF3DE;--green:#2D9A27;--green-t:#27500A;
+  --gray-bg:#F4F7FC;--card:#fff;--border:rgba(0,0,0,0.1);
+  --text:#111827;--text2:#6B7280;--text3:#9CA3AF;
+  --r:10px;--r2:14px;
+}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:14px;color:var(--text);background:var(--gray-bg);}
+
+/* ── Layout ── */
+.app{display:grid;grid-template-columns:260px 1fr 340px;grid-template-rows:56px 1fr;height:100vh;overflow:hidden;}
+.topbar{grid-column:1/-1;background:var(--navy);display:flex;align-items:center;gap:12px;padding:0 20px;}
+.topbar-logo{font-size:16px;font-weight:500;color:#fff;display:flex;align-items:center;gap:8px;}
+.topbar-logo span{opacity:.6;font-weight:400;font-size:13px;}
+.topbar-badge{background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-size:11px;color:rgba(255,255,255,.8);}
+.api-key-wrap{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.api-key-inp{background:rgba(255,255,255,.1);border:0.5px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 12px;font-size:12px;color:#fff;font-family:inherit;outline:none;width:260px;}
+.api-key-inp::placeholder{color:rgba(255,255,255,.4);}
+.api-key-inp:focus{border-color:rgba(255,255,255,.5);}
+.api-key-status{font-size:11px;white-space:nowrap;}
+.api-key-status.ok{color:#5DCAA5;}
+.api-key-status.err{color:#F09595;}
+
+/* ── Sidebar ── */
+.sidebar{background:var(--card);border-right:0.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.sidebar-head{padding:14px 16px 10px;border-bottom:0.5px solid var(--border);}
+.sidebar-head h2{font-size:12px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.search-inp{width:100%;border:0.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:13px;font-family:inherit;color:var(--text);background:var(--gray-bg);outline:none;}
+.search-inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,79,196,.1);}
+.add-btn{width:100%;margin-top:8px;padding:8px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+.add-btn:hover{background:#163d9e;}
+
+.sidebar-list{flex:1;overflow-y:auto;padding:8px;}
+.sit-item{padding:10px 12px;border-radius:var(--r);cursor:pointer;margin-bottom:2px;transition:background .1s;border:0.5px solid transparent;}
+.sit-item:hover{background:var(--gray-bg);}
+.sit-item.active{background:var(--blue-l);border-color:var(--blue-m);}
+.sit-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;}
+.sit-meta{display:flex;align-items:center;gap:6px;margin-top:4px;}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:500;}
+.badge-red{background:var(--red-bg);color:var(--red-t);}
+.badge-orange{background:var(--orange-bg);color:var(--orange-t);}
+.badge-green{background:var(--green-bg);color:var(--green-t);}
+.badge-blue{background:var(--blue-l);color:var(--blue-d);}
+.cat-label{font-size:11px;color:var(--text3);}
+
+/* ── Main editor ── */
+.main{overflow-y:auto;padding:20px;}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--text2);}
+.empty-icon{font-size:40px;opacity:.3;}
+.empty-state p{font-size:14px;}
+
+.editor-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:16px;}
+.editor-card-head{background:var(--blue-l);padding:12px 16px;border-bottom:0.5px solid var(--blue-m);display:flex;align-items:center;justify-content:space-between;}
+.editor-card-head h3{font-size:12px;font-weight:500;color:var(--blue-d);text-transform:uppercase;letter-spacing:.5px;}
+.editor-card-body{padding:16px;}
+
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:11px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.field-inp{width:100%;border:0.5px solid var(--border);border-radius:8px;padding:9px 11px;font-size:14px;font-family:inherit;color:var(--text);outline:none;transition:border-color .15s;}
+.field-inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,79,196,.1);}
+textarea.field-inp{resize:vertical;min-height:80px;line-height:1.6;}
+select.field-inp{background:var(--card);cursor:pointer;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+/* Steps editor */
+.step-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;}
+.step-num-badge{width:26px;height:26px;border-radius:50%;background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0;margin-top:8px;}
+.step-row .field-inp{flex:1;}
+.step-del{width:28px;height:28px;border:none;background:var(--red-bg);color:var(--red);border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0;margin-top:7px;display:flex;align-items:center;justify-content:center;}
+.add-step-btn{width:100%;padding:8px;border:0.5px dashed var(--border);border-radius:8px;background:transparent;color:var(--text2);font-size:13px;font-family:inherit;cursor:pointer;margin-top:4px;}
+.add-step-btn:hover{background:var(--gray-bg);}
+
+.save-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.save-btn:hover{background:#163d9e;}
+.delete-btn{width:100%;padding:10px;background:transparent;color:var(--red);border:0.5px solid var(--red-b);border-radius:8px;font-size:13px;font-family:inherit;cursor:pointer;margin-top:8px;}
+.delete-btn:hover{background:var(--red-bg);}
+
+/* ── Chat panel ── */
+.chat-panel{background:var(--card);border-left:0.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.chat-head{padding:14px 16px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:10px;}
+.chat-avatar{width:32px;height:32px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chat-head-info h3{font-size:14px;font-weight:500;color:var(--text);}
+.chat-head-info p{font-size:11px;color:var(--text3);}
+.online-dot{width:8px;height:8px;border-radius:50%;background:#2D9A27;margin-left:auto;}
+
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.msg{max-width:88%;display:flex;flex-direction:column;gap:3px;}
+.msg.bot{align-self:flex-start;}
+.msg.user{align-self:flex-end;}
+.msg-bubble{padding:9px 13px;border-radius:12px;font-size:13px;line-height:1.6;}
+.msg.bot .msg-bubble{background:var(--gray-bg);color:var(--text);border-bottom-left-radius:4px;}
+.msg.user .msg-bubble{background:var(--blue);color:#fff;border-bottom-right-radius:4px;}
+.msg-time{font-size:10px;color:var(--text3);padding:0 4px;}
+.msg.user .msg-time{text-align:right;}
+.typing{display:flex;gap:4px;align-items:center;padding:10px 13px;}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:bounce .9s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}
+.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-6px);}}
+
+.chat-suggestions{padding:8px 14px;display:flex;flex-wrap:wrap;gap:6px;border-top:0.5px solid var(--border);}
+.suggestion{padding:5px 11px;background:var(--blue-l);color:var(--blue-d);border:0.5px solid var(--blue-m);border-radius:20px;font-size:12px;cursor:pointer;font-family:inherit;}
+.suggestion:hover{background:var(--blue-m);}
+
+.chat-input-row{padding:12px 14px;border-top:0.5px solid var(--border);display:flex;gap:8px;align-items:flex-end;}
+.chat-textarea{flex:1;border:0.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;color:var(--text);resize:none;outline:none;max-height:100px;line-height:1.5;}
+.chat-textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,79,196,.1);}
+.chat-send{width:36px;height:36px;background:var(--blue);border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chat-send:hover{background:#163d9e;}
+.chat-send:disabled{background:var(--border);cursor:not-allowed;}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
+.toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-logo">
+      🏥 Skubi pagalba
+      <span>/ Turinio valdymas</span>
+    </div>
+    <div class="topbar-badge">⚕️ Tik medicinos darbuotojams</div>
+    <div class="api-key-wrap">
+      <input class="api-key-inp" id="apiKeyInp" type="password" placeholder="🔑 Anthropic API raktas (sk-ant-...)" oninput="saveApiKey(this.value)">
+      <span class="api-key-status" id="apiKeyStatus"></span>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-head">
+      <h2>Situacijos</h2>
+      <input class="search-inp" id="searchInp" placeholder="Ieškoti..." oninput="filterList()">
+      <button class="add-btn" onclick="newSituation()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Nauja situacija
+      </button>
+    </div>
+    <div class="sidebar-list" id="sidebarList"></div>
+  </div>
+
+  <!-- Main editor -->
+  <div class="main" id="mainArea">
+    <div class="empty-state">
+      <div class="empty-icon">📋</div>
+      <p>Pasirink situaciją arba sukurk naują</p>
+      <p style="font-size:12px;color:var(--text3);">Taip pat galesi naudotis AI asistento pagalba dešinėje</p>
+    </div>
+  </div>
+
+  <!-- Chat panel -->
+  <div class="chat-panel">
+    <div class="chat-head">
+      <div class="chat-avatar">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" fill="white"/><path d="M2 13c0-3 2.5-5 6-5s6 2 6 5" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+      </div>
+      <div class="chat-head-info">
+        <h3>AI asistentas</h3>
+        <p>Keičia turinį pagal komandas</p>
+      </div>
+      <div class="online-dot"></div>
+    </div>
+
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg bot">
+        <div class="msg-bubble">Sveika! Aš galiu pridėti naujas situacijas, keisti algoritmus, redaguoti žingsnius ar atsakyti į klausimus apie turinį. Ką norite padaryti?</div>
+        <div class="msg-time">dabar</div>
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="chatSuggestions">
+      <div class="suggestion" onclick="sendSuggestion(this)">Pridėk naują situaciją</div>
+      <div class="suggestion" onclick="sendSuggestion(this)">Kiek situacijų yra?</div>
+      <div class="suggestion" onclick="sendSuggestion(this)">Parodyk visas kategorijas</div>
+      <div class="suggestion" onclick="sendSuggestion(this)">Redaguok pasirinktą</div>
+    </div>
+
+    <div class="chat-input-row">
+      <textarea class="chat-textarea" id="chatInput" placeholder="Rašyk komandą..." rows="1" onkeydown="chatKeydown(event)"></textarea>
+      <button class="chat-send" id="sendBtn" onclick="sendChat()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7L13 1L7 13L6 8L1 7Z" fill="white"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Data ──
+const DEFAULT_DATA = [
+  {id:'sit-1',title:'Širdies sustojimas',category:'Širdis',danger:'Kritinis',icon:'❤️‍🔥',shortDesc:'CPR algoritmas, gaivinimas',keywords:'širdis,CPR,sustojimas,gaivinimas',steps:[
+    {title:'Patikrinkite sąmonę',detail:'Purtykite pečius, garsiai klauskite: „Ar girdite mane?"'},
+    {title:'Iškvieskite greitąją pagalbą',detail:'Skambinkite 112 arba paprašykite šalia esančio žmogaus.'},
+    {title:'Pradėkite krūtinės paspaudimus',detail:'100–120 k./min., 5–6 cm gylis. Rankos centre krūtinės.'},
+    {title:'2 dirbtiniai įkvėpimai',detail:'Po 30 paspaudimų — 2 įkvėpimai. Kartokite ciklą.'},
+    {title:'Naudokite AED jei prieinama',detail:'Įjunkite AED ir sekite balso instrukcijas.'}
+  ]},
+  {id:'sit-2',title:'Insultas',category:'Neurologija',danger:'Skubus',icon:'🧠',shortDesc:'FAST testas, greita diagnostika',keywords:'insultas,paralyžius,kalba,FAST',steps:[
+    {title:'FAST testas',detail:'F – veidas (asimetrija?), A – rankos (nukrenta?), S – kalba (neaiški?), T – laikas (skambinti 112).'},
+    {title:'Iškvieskite 112 nedelsiant',detail:'Nurodykite simptomus ir tikslų laiką, kada prasidėjo.'},
+    {title:'Paguldykite pacientą',detail:'Ant šono, galva šiek tiek pakelta. Nestumkite valgyti/gerti.'},
+    {title:'Stebėkite kvėpavimą',detail:'Iki greitosios atvykimo stebėkite sąmonės būklę ir kvėpavimą.'}
+  ]},
+  {id:'sit-3',title:'Stiprus kraujavimas',category:'Trauma',danger:'Kritinis',icon:'🩸',shortDesc:'Spaudimas, turniketas',keywords:'kraujavimas,žaizda,turniketas,spaudimas',steps:[
+    {title:'Tiesioginis spaudimas',detail:'Stipriai spauskite žaizdą švaria medžiaga arba tvarsčiu.'},
+    {title:'Nenukeldami spaudimo',detail:'Jei kraujuoja pro tvarstį — uždėkite naują viršuje, nesimkite senojo.'},
+    {title:'Galūnės kraujavimas',detail:'Jei kraujavimas iš galūnės ir negalima sustabdyti — uždėkite turniketą.'},
+    {title:'Turniketo taikymas',detail:'5–7 cm virš žaizdos. Priveržkite iki sustojimo. Pažymėkite laiką.'}
+  ]}
+];
+
+function loadData(){
+  try{const d=localStorage.getItem('skubi_situations');return d?JSON.parse(d):[...DEFAULT_DATA];}
+  catch{return [...DEFAULT_DATA];}
+}
+function saveData(){
+  localStorage.setItem('skubi_situations',JSON.stringify(situations));
+}
+
+let situations=loadData();
+let currentId=null;
+
+// ── Sidebar ──
+function renderSidebar(filter=''){
+  const list=document.getElementById('sidebarList');
+  const filtered=situations.filter(s=>
+    s.title.toLowerCase().includes(filter.toLowerCase())||
+    s.category.toLowerCase().includes(filter.toLowerCase())||
+    (s.keywords||'').toLowerCase().includes(filter.toLowerCase())
+  );
+  list.innerHTML=filtered.map(s=>`
+    <div class="sit-item${s.id===currentId?' active':''}" onclick="openSituation('${s.id}')">
+      <div class="sit-title">${s.icon||'📋'} ${s.title}</div>
+      <div class="sit-meta">
+        <span class="badge ${dangerClass(s.danger)}">${s.danger}</span>
+        <span class="cat-label">${s.category}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function dangerClass(d){
+  if(d==='Kritinis') return 'badge-red';
+  if(d==='Skubus') return 'badge-orange';
+  if(d==='Vidutinis') return 'badge-blue';
+  return 'badge-green';
+}
+
+function filterList(){
+  renderSidebar(document.getElementById('searchInp').value);
+}
+
+// ── Editor ──
+function openSituation(id){
+  currentId=id;
+  const s=situations.find(x=>x.id===id);
+  if(!s) return;
+  renderSidebar(document.getElementById('searchInp').value);
+  renderEditor(s);
+}
+
+function renderEditor(s){
+  const steps=s.steps||[];
+  document.getElementById('mainArea').innerHTML=`
+    <div class="editor-card">
+      <div class="editor-card-head">
+        <h3>Pagrindinė informacija</h3>
+        <span class="badge ${dangerClass(s.danger)}">${s.danger}</span>
+      </div>
+      <div class="editor-card-body">
+        <div class="two-col">
+          <div class="field-row">
+            <label>Ikona (emoji)</label>
+            <input class="field-inp" id="f-icon" value="${s.icon||''}">
+          </div>
+          <div class="field-row">
+            <label>Pavojingumo lygis</label>
+            <select class="field-inp" id="f-danger">
+              ${['Kritinis','Skubus','Vidutinis','Stabilus'].map(d=>`<option${d===s.danger?' selected':''}>${d}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <label>Pavadinimas</label>
+          <input class="field-inp" id="f-title" value="${s.title}">
+        </div>
+        <div class="two-col">
+          <div class="field-row">
+            <label>Kategorija</label>
+            <input class="field-inp" id="f-category" value="${s.category}">
+          </div>
+          <div class="field-row">
+            <label>Trumpas aprašas</label>
+            <input class="field-inp" id="f-shortDesc" value="${s.shortDesc||''}">
+          </div>
+        </div>
+        <div class="field-row">
+          <label>Raktiniai žodžiai (per kablelį)</label>
+          <input class="field-inp" id="f-keywords" value="${s.keywords||''}">
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-card">
+      <div class="editor-card-head"><h3>Algoritmo žingsniai</h3></div>
+      <div class="editor-card-body">
+        <div id="stepsContainer">
+          ${steps.map((st,i)=>`
+            <div class="step-row" id="step-row-${i}">
+              <div class="step-num-badge">${i+1}</div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+                <input class="field-inp" id="st-title-${i}" placeholder="Žingsnio pavadinimas" value="${st.title||''}">
+                <textarea class="field-inp" id="st-detail-${i}" placeholder="Detalus aprašas..." rows="2">${st.detail||''}</textarea>
+              </div>
+              <button class="step-del" onclick="removeStep(${i})">✕</button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="add-step-btn" onclick="addStep()">+ Pridėti žingsnį</button>
+      </div>
+    </div>
+
+    <button class="save-btn" onclick="saveSituation()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5.5 10.5L12 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Išsaugoti pakeitimus
+    </button>
+    <button class="delete-btn" onclick="deleteSituation()">🗑 Ištrinti situaciją</button>
+  `;
+}
+
+function getSteps(){
+  const container=document.getElementById('stepsContainer');
+  if(!container) return [];
+  const rows=container.querySelectorAll('.step-row');
+  return Array.from(rows).map((_,i)=>({
+    title:document.getElementById(`st-title-${i}`)?.value||'',
+    detail:document.getElementById(`st-detail-${i}`)?.value||''
+  })).filter(s=>s.title);
+}
+
+function addStep(){
+  const s=situations.find(x=>x.id===currentId);
+  if(!s) return;
+  s.steps=getSteps();
+  s.steps.push({title:'',detail:''});
+  renderEditor(s);
+  const rows=document.querySelectorAll('.step-row');
+  if(rows.length) rows[rows.length-1].querySelector('input')?.focus();
+}
+
+function removeStep(i){
+  const s=situations.find(x=>x.id===currentId);
+  if(!s) return;
+  s.steps=getSteps();
+  s.steps.splice(i,1);
+  renderEditor(s);
+}
+
+function saveSituation(){
+  const idx=situations.findIndex(x=>x.id===currentId);
+  if(idx<0) return;
+  situations[idx]={
+    ...situations[idx],
+    icon:document.getElementById('f-icon')?.value||'📋',
+    title:document.getElementById('f-title')?.value||'',
+    category:document.getElementById('f-category')?.value||'',
+    danger:document.getElementById('f-danger')?.value||'Vidutinis',
+    shortDesc:document.getElementById('f-shortDesc')?.value||'',
+    keywords:document.getElementById('f-keywords')?.value||'',
+    steps:getSteps()
+  };
+  saveData();
+  renderSidebar(document.getElementById('searchInp').value);
+  showToast('✅ Išsaugota');
+}
+
+function deleteSituation(){
+  if(!confirm('Tikrai ištrinti šią situaciją?')) return;
+  situations=situations.filter(x=>x.id!==currentId);
+  currentId=null;
+  saveData();
+  renderSidebar();
+  document.getElementById('mainArea').innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><p>Pasirink situaciją arba sukurk naują</p></div>`;
+  showToast('🗑 Ištrinta');
+}
+
+function newSituation(){
+  const id='sit-'+Date.now();
+  const s={id,title:'Nauja situacija',category:'Kita',danger:'Vidutinis',icon:'📋',shortDesc:'',keywords:'',steps:[]};
+  situations.unshift(s);
+  saveData();
+  openSituation(id);
+}
+
+// ── Toast ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ── Chat ──
+let chatHistory=[];
+// ── API Key ──
+function saveApiKey(val){
+  localStorage.setItem('anthropic_key', val);
+  updateKeyStatus(val);
+}
+function updateKeyStatus(val){
+  const s=document.getElementById('apiKeyStatus');
+  if(!s) return;
+  if(val && val.startsWith('sk-ant-')){
+    s.textContent='✓ Raktas išsaugotas';
+    s.className='api-key-status ok';
+  } else if(val){
+    s.textContent='⚠ Formatas: sk-ant-...';
+    s.className='api-key-status err';
+  } else {
+    s.textContent='';
+  }
+}
+function getApiKey(){
+  return localStorage.getItem('anthropic_key')||'';
+}
+
+const API_URL='https://api.anthropic.com/v1/messages';
+
+function getSystemPrompt(){
+  return `Tu esi "Skubi pagalba" programėlės turinio valdymo AI asistentas. Dirbi su medicinos darbuotojais lietuvių kalba.
+
+Dabartinis turinys (${situations.length} situacijos):
+${situations.map(s=>`- ID: ${s.id} | "${s.title}" | Kategorija: ${s.category} | Pavojingumas: ${s.danger} | Žingsniai: ${s.steps?.length||0}`).join('\n')}
+
+Galimi veiksmai:
+1. PRIDETI - sukurti naują situaciją
+2. REDAGUOTI - pakeisti esamą situaciją
+3. ISTRINTI - ištrinti situaciją
+4. INFO - atsakyti į klausimą apie turinį
+
+Kai reikia atlikti veiksmą su turiniu, atsakyk TIKTAI JSON formatu (be jokio kito teksto):
+{"action":"ADD"|"EDIT"|"DELETE","data":{...},"message":"Trumpas patvirtinimas lietuviškai"}
+
+ADD data struktūra: {"title":"...","category":"...","danger":"Kritinis|Skubus|Vidutinis|Stabilus","icon":"emoji","shortDesc":"...","keywords":"...","steps":[{"title":"...","detail":"..."}]}
+EDIT data struktūra: {"id":"sit-xxx","title":"...","category":"...","danger":"...","icon":"...","shortDesc":"...","keywords":"...","steps":[...]}
+DELETE data struktūra: {"id":"sit-xxx"}
+
+Jei vartotojas tik klausia (ne veiksmas) — atsakyk normaliu lietuvišku tekstu, be JSON.
+Būk konkretus, medicinos kontekstą suprask. Žingsniai turi būti aiškūs ir tinkamos medicininės kokybės.`;
+}
+
+async function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const msg=inp.value.trim();
+  if(!msg) return;
+  inp.value='';
+  addMsg('user',msg);
+  document.getElementById('sendBtn').disabled=true;
+  showTyping();
+  chatHistory.push({role:'user',content:msg});
+
+  const apiKey=getApiKey();
+  if(!apiKey||!apiKey.startsWith('sk-ant-')){
+    hideTyping();
+    addMsg('bot','⚠️ Įveskite Anthropic API raktą viršuje (sk-ant-...). Jį rasite: console.anthropic.com → API Keys');
+    document.getElementById('sendBtn').disabled=false;
+    return;
+  }
+  try{
+    const res=await fetch(API_URL,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:getSystemPrompt(),
+        messages:chatHistory
+      })
+    });
+    const data=await res.json();
+    const text=data.content?.[0]?.text||'Klaida. Bandykite dar kartą.';
+    hideTyping();
+    chatHistory.push({role:'assistant',content:text});
+    processResponse(text);
+  }catch(e){
+    hideTyping();
+    addMsg('bot','⚠️ Ryšio klaida. Patikrinkite internetą.');
+    document.getElementById('sendBtn').disabled=false;
+  }
+}
+
+function processResponse(text){
+  document.getElementById('sendBtn').disabled=false;
+  try{
+    const json=JSON.parse(text.trim());
+    if(json.action==='ADD'){
+      const s={id:'sit-'+Date.now(),...json.data};
+      situations.unshift(s);
+      saveData();
+      renderSidebar();
+      openSituation(s.id);
+      addMsg('bot','✅ '+json.message);
+      showToast('✅ Pridėta: '+s.title);
+    } else if(json.action==='EDIT'){
+      const idx=situations.findIndex(x=>x.id===json.data.id);
+      if(idx>=0){
+        situations[idx]={...situations[idx],...json.data};
+        saveData();
+        renderSidebar();
+        if(currentId===json.data.id) renderEditor(situations[idx]);
+        addMsg('bot','✅ '+json.message);
+        showToast('✅ Atnaujinta');
+      } else addMsg('bot','⚠️ Situacija nerasta.');
+    } else if(json.action==='DELETE'){
+      situations=situations.filter(x=>x.id!==json.data.id);
+      saveData();
+      renderSidebar();
+      addMsg('bot','✅ '+json.message);
+      showToast('🗑 Ištrinta');
+    }
+  } catch{
+    addMsg('bot',text);
+  }
+}
+
+function addMsg(role,text){
+  const msgs=document.getElementById('chatMsgs');
+  const now=new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'});
+  const div=document.createElement('div');
+  div.className=`msg ${role}`;
+  div.innerHTML=`<div class="msg-bubble">${text}</div><div class="msg-time">${now}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+let typingEl=null;
+function showTyping(){
+  const msgs=document.getElementById('chatMsgs');
+  typingEl=document.createElement('div');
+  typingEl.className='msg bot';
+  typingEl.innerHTML='<div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(typingEl);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function hideTyping(){
+  if(typingEl){typingEl.remove();typingEl=null;}
+}
+
+function sendSuggestion(el){
+  document.getElementById('chatInput').value=el.textContent;
+  sendChat();
+}
+
+function chatKeydown(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}
+}
+
+// ── Init ──
+renderSidebar();
+const savedKey=getApiKey();
+if(savedKey){
+  const inp=document.getElementById('apiKeyInp');
+  if(inp) inp.value=savedKey;
+  updateKeyStatus(savedKey);
+}
+</script>
+</body>
+</html>
