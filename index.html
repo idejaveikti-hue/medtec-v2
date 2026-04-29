@@ -871,7 +871,6 @@ function steps(arr){
     </div>
   `).join("");
 }
-
 function openD(i){
   const x = data[i];
 
@@ -889,62 +888,63 @@ function openD(i){
           <h2>${x.t}</h2>
           <p>${x.cat}</p>
         </div>
-        <span class="badge crit">${x.d}</span>
+        <span class="badge ${x.d.includes("Kritinė") ? "crit" : "urgent"}">${x.d}</span>
       </div>
     </div>
 
     <div class="tabs">
       <button class="tab active">Pirmos minutės</button>
-      <button class="tab">ABCDE</button>
-      <button class="tab">Atpažinimas</button>
-      <button class="tab">Gydymas</button>
+      <button class="tab">Požymiai</button>
+      <button class="tab">Vaistai</button>
+      <button class="tab">Vaikai</button>
     </div>
 
     <div class="panel">
       <h3>Pirmos minutės</h3>
-      ${steps(x.fast)}
-    </div>
-
-    <div class="panel redPanel">
-      <h3 style="color:#FF3B3B">Raudonos vėliavos</h3>
-      <ul>${x.red.map(r=>`<li>${r}</li>`).join("")}</ul>
+      ${steps(x.fast || [])}
     </div>
 
     <div class="panel">
-      <h3>Atpažinimas</h3>
-      <p class="infoText">${x.sym.join("<br>")}</p>
+      <h3>Požymiai / atpažinimas</h3>
+      <p class="infoText">${(x.sym || []).join("<br>")}</p>
     </div>
 
     <div class="panel">
       <h3>Gydymo principai</h3>
-      ${steps(x.treat)}
+      ${steps(x.treat || [])}
     </div>
+
+    ${x.meds && x.meds.length ? `
+      <div class="panel redPanel">
+        <h3 style="color:#FF3B3B">Vaistai ir dozės</h3>
+        ${steps(x.meds)}
+      </div>
+    ` : ""}
+
+    ${x.dilution && x.dilution.length ? `
+      <div class="panel">
+        <h3>Skiedimai / infuzijos</h3>
+        ${steps(x.dilution)}
+      </div>
+    ` : ""}
+
+    ${x.red && x.red.length ? `
+      <div class="panel redPanel">
+        <h3 style="color:#FF3B3B">Raudonos vėliavos</h3>
+        <ul>${x.red.map(r=>`<li>${r}</li>`).join("")}</ul>
+      </div>
+    ` : ""}
+
+    ${x.children && x.children.length ? `
+      <div class="panel" style="border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)">
+        <h3 style="color:#86EFAC">Vaikai</h3>
+        ${steps(x.children)}
+      </div>
+    ` : ""}
   `;
-  ${x.meds && x.meds.length ? `
-  <div class="panel redPanel">
-    <h3 style="color:#FF3B3B">Vaistai ir dozės</h3>
-    ${steps(x.meds)}
-  </div>
-` : ""}
-
-${x.dilution && x.dilution.length ? `
-  <div class="panel">
-    <h3>Skiedimai / infuzijos</h3>
-    ${steps(x.dilution)}
-  </div>
-` : ""}
-
-${x.children && x.children.length ? `
-  <div class="panel" style="border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)">
-    <h3 style="color:#86EFAC">Vaikai</h3>
-    ${steps(x.children)}
-  </div>
-` : ""}
 
   show("detail");
 }
-
-function renderAbcde(){
   document.getElementById("abcdeList").innerHTML = abcde.map(a=>`
     <div class="row abcdeItem">
       <div class="letter" style="background:${a[4]}">${a[0]}</div>
